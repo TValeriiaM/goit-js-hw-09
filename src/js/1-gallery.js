@@ -66,35 +66,8 @@ const images = [
   },
 ];
 
-const container = document.querySelector('.gallery');
-
-container.insertAdjacentHTML('beforeend', createMarkup(images));
-container.addEventListener('click', openOriginalImage);
-
-function openOriginalImage(event) {
-  if (event.target.nodeName === 'IMG') {
-    event.preventDefault();
-    const instance = basicLightbox.create(
-      `
-        <img src="${event.target.dataset.source}" width="800" height="600">
-        alt="${event.target.alt}"
-      `,
-      {
-        onShow: () => document.addEventListener('keydown', onKeyPress),
-        onClose: () => document.removeEventListener('keydown', onKeyPress),
-      }
-    );
-
-    const onKeyPress = e => {
-      if (e.key === 'Escape') {
-        instance.close();
-      }
-    };
-
-    instance.show();
-  }
-}
-
+const galleryBox = document.querySelector('.gallery');
+galleryBox.insertAdjacentHTML('beforeend', createMarkup(images));
 function createMarkup(arr) {
   return arr
     .map(
@@ -113,3 +86,11 @@ function createMarkup(arr) {
     )
     .join('');
 }
+
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
+const lightbox = new SimpleLightbox('.gallery-link', {
+  captionsData: 'alt',
+  captionsDelay: 250,
+});
