@@ -1,5 +1,3 @@
-'use strict';
-
 const localStorageKey = 'feedback-form-state';
 
 const form = document.querySelector('.feedback-form');
@@ -25,6 +23,7 @@ form.addEventListener('submit', event => {
   event.preventDefault();
   if (inputEmail.value.trim() !== '' && inputTextarea.value.trim() !== '') {
     console.log(JSON.parse(localStorage.getItem(localStorageKey)));
+    localStorage.removeItem(localStorageKey);
     form.reset();
   } else alert('All form fields must be filled in');
 });
